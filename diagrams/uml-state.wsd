@@ -1,0 +1,53 @@
+@startuml
+
+skin rose
+
+title State Diagram
+
+[*] --> ESPERA
+
+state ESPERA {
+  [*] --> Idle
+  Idle --> CONFIGURAÇAO: AmplificacaoConfig
+}
+
+state CONFIGURAÇAO {
+  [*] --> NovaFaixaDeConfiguracao
+  [*] --> EscolhaDePreset
+  
+  NovaFaixaDeConfiguracao --> FEED
+  EscolhaDePreset --> FEED
+}
+
+state FEED {
+  [*] --> SelecaoDeFeed
+  SelecaoDeFeed --> EscolhaDoDispositivo
+  EscolhaDoDispositivo --> PreviewDoDispositivo
+  EscolhaDoDispositivo --> ESPERA: Dispositivo_indisponivel
+  PreviewDoDispositivo --> CONFIGURAÇAO: Config_Invalida
+  
+  SelecaoDeFeed --> AcessoFeedArmazenado
+  AcessoFeedArmazenado --> PreviewDoDispositivo
+
+  PreviewDoDispositivo --> PROCESSANDO
+
+  PreviewDoDispositivo: Identifica se FPS do FEED é compátivel com a frequência de vibração (Hz)
+}
+
+state PROCESSANDO {
+  [*] --> AcumulaFrame
+  AcumulaFrame --> AcumulaFrame: Stream
+  AcumulaFrame --> Amplificação
+
+
+  Amplificação --> FrameAmplificado
+  FrameAmplificado --> Preview
+  Preview --> Renderização
+  Renderização --> DISPONIVEL
+}
+
+state DISPONIVEL {
+  [*] --> Pronto
+}
+
+@enduml

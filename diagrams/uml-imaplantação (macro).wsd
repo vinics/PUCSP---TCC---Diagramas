@@ -1,0 +1,15 @@
+@startuml
+
+node User
+node "Company local server"
+node "IoT network"
+cloud Database
+cloud Process
+
+User -right- [Company local server]: Public
+[Company local server] -right- [IoT network]: Private
+[Company local server] -- Database
+[Company local server] -- Process
+Database .. Process
+
+@enduml

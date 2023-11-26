@@ -1,0 +1,37 @@
+@startuml
+
+node "Sistema de Login" as login
+node "Painel do usuario" as configFF
+
+login -- configFF
+
+usecase AuthenticateUser
+login -- AuthenticateUser
+
+component SistemaDeFaixaDeFrequencia
+component GestaoDosVideos
+
+configFF -- SistemaDeFaixaDeFrequencia
+configFF -- GestaoDosVideos
+
+usecase SetNewFrequencyBand
+SistemaDeFaixaDeFrequencia -- SetNewFrequencyBand
+
+usecase SetFrequencyBand
+SistemaDeFaixaDeFrequencia -- SetFrequencyBand
+
+component Gestor_IoT as iot
+
+GestaoDosVideos -- iot
+
+component Amplificador
+SistemaDeFaixaDeFrequencia -- Amplificador
+GestaoDosVideos -- Amplificador
+
+database Database
+Amplificador -- Database
+GestaoDosVideos -- Database
+
+
+
+@enduml

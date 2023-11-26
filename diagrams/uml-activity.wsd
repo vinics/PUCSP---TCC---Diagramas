@@ -1,0 +1,58 @@
+@startuml
+
+skin rose
+
+title Activity Diagram \n
+
+start
+
+:**User** logado acessa o sistema;
+split
+  :Amplifica vídeo;
+
+  if (preset de frequências?) then (yes)
+    :Carrega preset;
+  else (no)
+    :Configurar faixa de frequências;
+  endif
+
+  :Solicita feed;
+
+  if (Realtime?) then (yes)
+    :Acessar IoT gateway;
+
+    if (Feed disponível?) then (yes)
+
+      if (Feed suporta faixa de frequências?) then(yes)
+
+        fork
+          :Armazena feed bruto;
+        fork again
+          :Processa Amplificação;
+          :Armazena Vídeo amplificado;
+        end fork
+      
+      else (no)
+        :Feed incompatível com faixa de frequencias;
+        stop
+      endif
+
+      
+    else (no)
+      :Erro Feed indisponível;
+      stop
+    endif
+  else (no)
+    :Acessa gravações;
+    :Processa amplificação;
+  endif
+
+split again
+  :Acessa armazenamento;
+
+end split
+
+  :Disponibiliza vídeo;
+end
+
+@enduml

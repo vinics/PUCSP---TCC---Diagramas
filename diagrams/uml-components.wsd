@@ -1,0 +1,65 @@
+@startuml
+
+skin rose
+
+title Component Diagram
+
+component [Processamento]
+interface ProcessConfig
+ProcessConfig -- Processamento
+
+
+component [Video Feed] as feed
+interface amplifiedVideoRequest as ampRequest
+ampRequest -- feed
+
+component [User]
+User ..> ProcessConfig
+User ..> ampRequest
+
+feed .right.> Processamento
+
+component [Visualização]
+interface ViewRequest
+
+User ..> ViewRequest
+ViewRequest -- Visualização
+Processamento .right.> Visualização
+
+rectangle CameraFeed
+interface FeedRequest
+
+feed ..> FeedRequest
+FeedRequest -- CameraFeed
+
+
+@enduml
+
+' @startuml
+
+' skin rose
+
+' title Component Diagram
+
+' ' [Business Logic]
+' ' [Data Access] as DA
+' ' component [Graphic User\nInterface] as GUI
+
+' rectangle Usuário
+
+' interface Amplificação
+' interface Visualização
+
+' component [Processamento]
+' component [Visualizar feed] as raw
+' component [Acessar Feed] as access
+
+' Usuário ..> Amplificação
+' Usuário ..> Visualização
+
+' Amplificação -- Processamento
+' Visualização -- raw
+' Processamento ..> access
+' raw ..> access
+
+' @enduml

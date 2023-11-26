@@ -1,0 +1,43 @@
+@startuml
+
+skin rose
+
+title Package Diagram
+
+
+package "User"  {
+  package Amplificar
+  package Buscar
+}
+
+package "Video" {
+  package Source
+  package Amplificado
+}
+
+package "Processamento"
+
+package "Captação"
+
+package "Sistema IoT" {
+  package Camera
+  package Sensor
+}
+
+package database {
+  
+}
+
+Amplificar ..> Source
+Source <.. Captação
+Captação <.. Camera
+
+Source ..> Processamento
+Processamento ..> Amplificado
+Amplificado ..> database
+
+database <..> User
+
+
+
+@enduml
